@@ -6,10 +6,12 @@ from torch.utils.data import Dataset, DataLoader
 ① Prepare dataset
 # Dataset and Dataloader
 """
+
+
 class DiabetesDataset(Dataset):
     def __init__(self, filepath):
         xy = np.loadtxt(filepath, delimiter=',', dtype=np.float32)
-        self.len = xy.shape[0]
+        self.len = xy.shape[0]  # shape(多少行，多少列)
         self.x_data = torch.from_numpy(xy[:, :-1])
         self.y_data = torch.from_numpy(xy[:, [-1]])
 
@@ -20,13 +22,15 @@ class DiabetesDataset(Dataset):
         return self.len
 
 
-dataset = DiabetesDataset('.\\..\\Multiple_Dimension_Input\\diabetes.csv.gz')
-train_loader = DataLoader(dataset=dataset, batch_size=32, shuffle=True, num_workers=2)
+dataset = DiabetesDataset('../Multiple_Dimension_Input_7\\diabetes.csv.gz')
+train_loader = DataLoader(dataset=dataset, batch_size=32, shuffle=True, num_workers=2)  # num_workers 多线程
 
 """
 ②Design model using Class
 inherit from nn.Module
 """
+
+
 class Model(torch.nn.Module):
     def __init__(self):
         super(Model, self).__init__()
@@ -55,7 +59,7 @@ forward, backward, update
 '''
 if __name__ == '__main__':
     for epoch in range(100):
-        for i, data in enumerate(train_loader, 0):
+        for i, data in enumerate(train_loader, 0):  # train_loader 是先shuffle后mini_batch
             # 1. Prepare data
             inputs, labels = data
             # 2. Forward

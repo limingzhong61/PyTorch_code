@@ -19,6 +19,7 @@ class LogisticRegressionModel(torch.nn.Module):
 model = LogisticRegressionModel()
 # --------------------------------------------------------------#
 # ③Construct loss and optimizer using PyTorch API
+# 默认情况下，loss会基于element平均，如果size_average=False(新版使用reduction='sum')的话，loss会被累加。
 criterion = torch.nn.BCELoss(reduction='sum')
 optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
 # --------------------------------------------------------------#
@@ -31,7 +32,7 @@ for epoch in range(1000):
     optimizer.zero_grad()
     loss.backward()
     optimizer.step()
-
+# Result of Logistic Regression
 import numpy as np
 import matplotlib.pyplot as plt
 

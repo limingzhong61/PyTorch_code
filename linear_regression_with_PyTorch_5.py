@@ -1,4 +1,5 @@
 import torch
+import matplotlib.pyplot as plt
 
 # ①prepare dataset
 # x,y是矩阵，3行1列 也就是说总共有3个数据，每个数据只有1个特征
@@ -34,6 +35,11 @@ model = LinearModel()
 criterion = torch.nn.MSELoss(reduction='sum')
 optimizer = torch.optim.SGD(model.parameters(), lr=0.01)  # model.parameters()自动完成参数的初始化操作
 
+# List w_list save the weights 𝝎
+# List mse_list save the cost values of each 𝝎
+w_list = []
+mse_list = []
+
 # ④training cycle forward, backward, update
 for epoch in range(100):
     y_pred = model(x_data)  # forward:predict
@@ -44,9 +50,24 @@ for epoch in range(100):
     loss.backward()  # backward: autograd，自动计算梯度
     optimizer.step()  # update 参数，即更新w和b的值
 
+    # Save  𝝎 and correspondence MSE,便于画图
+    w_list.append(model.linear.weight.item())
+    mse_list.append(loss.item() / 3)
+
 print('w = ', model.linear.weight.item())
 print('b = ', model.linear.bias.item())
 
 x_test = torch.tensor([[4.0]])
 y_test = model(x_test)
 print('y_pred = ', y_test.data)
+
+# Draw the graph
+plt.plot(w_list, mse_list)
+plt.ylabel('Lost')
+plt.xlabel('w')
+plt.show()
+# epoch -mse graph
+plt.plot(range(100), mse_list)
+plt.ylabel('Lost')
+plt.xlabel('w')
+plt.show()

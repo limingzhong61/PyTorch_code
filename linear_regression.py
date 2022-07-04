@@ -38,9 +38,11 @@ for w in np.arange(0.0, 4.1, 0.1):
         l_sum += loss_val
     print('\t', x_val, y_val, y_pred_val, loss_val)
     print((' MSE=', l_sum / 3))
+
     # Save  𝝎 and correspondence MSE
     w_list.append(w)
     mse_list.append(l_sum / 3)
+
 # Draw the graph
 plt.plot(w_list, mse_list)
 plt.ylabel('Lost')
