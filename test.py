@@ -1,1 +1,1 @@
-print("classifier to MNIST dataset".replace(" ", "_"))
+print("otto group product classification challenge".replace(" ", "_"))
